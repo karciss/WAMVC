@@ -31,9 +31,19 @@ namespace WAMVC.Data
                 .HasOne(dp => dp.Producto) //un detalle de pedido tiene un producto
                 .WithMany(p => p.DetallePedidos) //un producto puede estar en muchos detalles de pedido
                 .HasForeignKey(dp => dp.IdProducto); //clave foranea en la tabla detalles de pedido
-
-            
+                
+            // Configurar precisión para campos decimales
+            modelBuilder.Entity<ProductoModel>()
+                .Property(p => p.Precio)
+                .HasColumnType("decimal(18,2)");
+                
+            modelBuilder.Entity<DetallePedidoModel>()
+                .Property(d => d.PrecioUnitario)
+                .HasColumnType("decimal(18,2)");
+                
+            modelBuilder.Entity<PedidoModel>()
+                .Property(p => p.MontoTotal)
+                .HasColumnType("decimal(18,2)");
         }
-
     }
 }
