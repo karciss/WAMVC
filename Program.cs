@@ -1,9 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using WAMVC.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-
+// Registrar el contexto de base de datos
+builder.Services.AddDbContext<ArtesaniasDBContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
