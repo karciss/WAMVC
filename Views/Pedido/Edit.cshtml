@@ -1,11 +1,12 @@
 ﻿@model WAMVC.Models.PedidoModel
 
 @{
-    ViewData["Title"] = "Editar Pedido";
+    ViewData["Title"] = "Editar";
 }
 
-<h1>Editar Pedido</h1>
+<h1>Editar</h1>
 
+<h4>Pedido</h4>
 <hr />
 <div class="row">
     <div class="col-md-6">
@@ -15,7 +16,7 @@
             
             <div class="form-group mb-3">
                 <label asp-for="IdCliente" class="control-label"></label>
-                <select asp-for="IdCliente" class="form-control form-select" asp-items="ViewBag.IdCliente"></select>
+                <select asp-for="IdCliente" class="form-control" asp-items="ViewBag.IdCliente"></select>
                 <span asp-validation-for="IdCliente" class="text-danger"></span>
             </div>
             
@@ -27,23 +28,24 @@
             
             <div class="form-group mb-3">
                 <label asp-for="Estado" class="control-label"></label>
-                <select asp-for="Estado" class="form-control form-select" asp-items="ViewBag.Estados"></select>
+                <select asp-for="Estado" class="form-control">
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En proceso">En proceso</option>
+                    <option value="Completado">Completado</option>
+                    <option value="Cancelado">Cancelado</option>
+                </select>
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
             
             <div class="form-group mb-3">
                 <label asp-for="MontoTotal" class="control-label"></label>
-                <div class="input-group">
-                    <span class="input-group-text">$</span>
-                    <input asp-for="MontoTotal" class="form-control" type="number" step="0.01" min="0" />
-                </div>
+                <input asp-for="MontoTotal" class="form-control" />
                 <span asp-validation-for="MontoTotal" class="text-danger"></span>
-                <small class="form-text text-muted">Ingrese el monto total del pedido manualmente.</small>
             </div>
             
-            <div class="form-group mt-4">
-                <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary ms-2">Volver a la lista</a>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
             </div>
         </form>
     </div>

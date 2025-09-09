@@ -1,28 +1,21 @@
 ﻿@model WAMVC.Models.DetallePedidoModel
 
 @{
-    ViewData["Title"] = "Crear Detalle de Pedido";
+    ViewData["Title"] = "Crear";
 }
 
-<h1>Crear Detalle de Pedido</h1>
+<h1>Crear</h1>
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        @TempData["ErrorMessage"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-
+<h4>Detalle de Pedido</h4>
 <hr />
 <div class="row">
-    <div class="col-md-8">
-        <form asp-action="Create" method="post">
-            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
             <div class="form-group mb-3">
                 <label asp-for="IdPedido" class="control-label"></label>
-                <select asp-for="IdPedido" class="form-control form-select" asp-items="ViewBag.IdPedido">
+                <select asp-for="IdPedido" class="form-control" asp-items="ViewBag.IdPedido">
                     <option value="">-- Seleccione un Pedido --</option>
                 </select>
                 <span asp-validation-for="IdPedido" class="text-danger"></span>
@@ -30,134 +23,32 @@
             
             <div class="form-group mb-3">
                 <label asp-for="IdProducto" class="control-label"></label>
-                <select asp-for="IdProducto" class="form-control form-select" asp-items="ViewBag.IdProducto">
+                <select asp-for="IdProducto" class="form-control" asp-items="ViewBag.IdProducto">
                     <option value="">-- Seleccione un Producto --</option>
                 </select>
                 <span asp-validation-for="IdProducto" class="text-danger"></span>
-                <small class="form-text text-muted">El precio unitario se asignará automáticamente según el producto.</small>
             </div>
             
             <div class="form-group mb-3">
                 <label asp-for="Cantidad" class="control-label"></label>
-                <input asp-for="Cantidad" class="form-control" type="number" min="1" max="100" value="1" />
+                <input asp-for="Cantidad" class="form-control" type="number" />
                 <span asp-validation-for="Cantidad" class="text-danger"></span>
             </div>
             
-            <div class="form-group mt-4">
-                <input type="submit" value="Crear Detalle" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary ms-2">Volver a la lista</a>
-                <a asp-controller="Pedido" asp-action="Index" class="btn btn-info ms-2">Ver Pedidos</a>
-                <a asp-controller="Producto" asp-action="Index" class="btn btn-warning ms-2">Ver Productos</a>
+            <div class="form-group mb-3">
+                <label asp-for="PrecioUnitario" class="control-label"></label>
+                <input asp-for="PrecioUnitario" class="form-control" />
+                <span asp-validation-for="PrecioUnitario" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
             </div>
         </form>
-    </div>
-    
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h5>Información de Depuración</h5>
-            </div>
-            <div class="card-body">
-                <p><strong>Estado del Modelo:</strong></p>
-                <ul>
-                    <li>Pedido ID: @Model?.IdPedido</li>
-                    <li>Producto ID: @Model?.IdProducto</li>
-                    <li>Cantidad: @Model?.Cantidad</li>
-                    <li>Precio Unitario: @Model?.PrecioUnitario</li>
-                </ul>
-                
-                <p><strong>Opciones Disponibles:</strong></p>
-                <ul>
-                    <li>Pedidos: @(ViewBag.IdPedido != null ? ((SelectList)ViewBag.IdPedido).Count() : 0)</li>
-                    <li>Productos: @(ViewBag.IdProducto != null ? ((SelectList)ViewBag.IdProducto).Count() : 0)</li>
-                </ul>
-                
-                @if (!ViewData.ModelState.IsValid)
-                {
-                    <p><strong>Errores de Validación:</strong></p>
-                    <ul class="text-danger">
-                        @foreach (var error in ViewData.ModelState)
-                        {
-                            @foreach (var errorMsg in error.Value.Errors)
-                            {
-                                <li>@error.Key: @errorMsg.ErrorMessage</li>
-                            }
-                        }
-                    </ul>
-                }
-            </div>
-        </div>
-        
-        <div class="card mt-3">
-            <div class="card-header">
-                <h6>Información del Producto Seleccionado</h6>
-            </div>
-            <div class="card-body">
-                <div id="producto-info">
-                    Seleccione un producto para ver su información
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Formulario cargado');
-            
-            // Mostrar información del producto seleccionado
-            var productoSelect = document.getElementById('IdProducto');
-            var productoInfo = document.getElementById('producto-info');
-            
-            if (productoSelect) {
-                productoSelect.addEventListener('change', function() {
-                    var selectedId = this.value;
-                    console.log('Producto seleccionado:', selectedId);
-                    
-                    if (selectedId) {
-                        // En una implementación real, podrías hacer una llamada AJAX para obtener la info del producto
-                        productoInfo.innerHTML = `Producto ID: ${selectedId}<br>El precio se asignará automáticamente`;
-                    } else {
-                        productoInfo.innerHTML = 'Seleccione un producto para ver su información';
-                    }
-                });
-            }
-            
-            // Validación adicional al enviar
-            var form = document.querySelector('form');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    var pedido = document.getElementById('IdPedido').value;
-                    var producto = document.getElementById('IdProducto').value;
-                    var cantidad = document.getElementById('Cantidad').value;
-                    
-                    console.log('Enviando formulario...');
-                    console.log('Pedido:', pedido);
-                    console.log('Producto:', producto);
-                    console.log('Cantidad:', cantidad);
-                    
-                    if (!pedido) {
-                        alert('Por favor seleccione un pedido');
-                        e.preventDefault();
-                        return false;
-                    }
-                    
-                    if (!producto) {
-                        alert('Por favor seleccione un producto');
-                        e.preventDefault();
-                        return false;
-                    }
-                    
-                    if (!cantidad || cantidad < 1 || cantidad > 100) {
-                        alert('Por favor ingrese una cantidad válida (1-100)');
-                        e.preventDefault();
-                        return false;
-                    }
-                });
-            }
-        });
-    </script>
 }

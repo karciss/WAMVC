@@ -1,105 +1,70 @@
 ﻿@model WAMVC.Models.PedidoModel
 
 @{
-    ViewData["Title"] = "Detalles del Pedido";
+    ViewData["Title"] = "Detalles";
 }
 
-<h1>Detalles del Pedido #@Model.Id</h1>
+<h1>Detalles</h1>
 
-<div class="row mt-4">
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Información del Pedido</h5>
-            </div>
-            <div class="card-body">
-                <dl class="row">
-                    <dt class="col-sm-4">Cliente</dt>
-                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Cliente.Nombre)</dd>
-                    
-                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.FechaPedido)</dt>
-                    <dd class="col-sm-8">@Model.FechaPedido.ToString("dd/MM/yyyy")</dd>
-                    
-                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Estado)</dt>
-                    <dd class="col-sm-8">
-                        @{
-                            var badgeClass = Model.Estado switch
-                            {
-                                "Pendiente" => "bg-warning",
-                                "En proceso" => "bg-primary",
-                                "Completado" => "bg-success",
-                                "Cancelado" => "bg-danger",
-                                _ => "bg-secondary"
-                            };
-                        }
-                        <span class="badge @badgeClass">@Model.Estado</span>
-                    </dd>
-                    
-                    <dt class="col-sm-4">@Html.DisplayNameFor(model => model.MontoTotal)</dt>
-                    <dd class="col-sm-8">$@Html.DisplayFor(model => model.MontoTotal)</dd>
-                </dl>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-md-6">
-        <div class="d-flex justify-content-between mb-3">
-            <div>
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar Pedido</a>
-                <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
-            </div>
-            <a asp-controller="DetallePedido" asp-action="Create" class="btn btn-success">+ Agregar Productos</a>
-        </div>
-    </div>
+<div>
+    <h4>Pedido</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cliente)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cliente.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaPedido)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.FechaPedido.ToString("dd/MM/yyyy")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MontoTotal)
+        </dt>
+        <dd class="col-sm-10">
+            $@Html.DisplayFor(model => model.MontoTotal)
+        </dd>
+    </dl>
 </div>
 
-<div class="card mt-4">
-    <div class="card-header bg-dark text-white">
-        <h5 class="mb-0">Productos en este Pedido</h5>
-    </div>
-    <div class="card-body">
-        @if (Model.DetallePedidos != null && Model.DetallePedidos.Any())
-        {
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Precio Unitario</th>
-                        <th>Cantidad</th>
-                        <th>Subtotal</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var detalle in Model.DetallePedidos)
-                    {
-                        <tr>
-                            <td>@detalle.Producto?.Nombre</td>
-                            <td>$@detalle.PrecioUnitario</td>
-                            <td>@detalle.Cantidad</td>
-                            <td>$@(detalle.Cantidad * detalle.PrecioUnitario)</td>
-                            <td>
-                                <a asp-controller="DetallePedido" asp-action="Edit" asp-route-id="@detalle.Id" class="btn btn-sm btn-warning">Editar</a>
-                                <a asp-controller="DetallePedido" asp-action="Delete" asp-route-id="@detalle.Id" class="btn btn-sm btn-danger">Eliminar</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th colspan="3" class="text-end">Total:</th>
-                        <th>$@Model.MontoTotal</th>
-                        <th></th>
-                    </tr>
-                </tfoot>
-            </table>
-        }
-        else
-        {
-            <div class="alert alert-info">
-                Este pedido aún no tiene productos. 
-                <a asp-controller="DetallePedido" asp-action="Create" class="alert-link">Haga clic aquí para agregar productos</a>.
-            </div>
-        }
-    </div>
+@if (Model.DetallePedidos != null && Model.DetallePedidos.Any())
+{
+    <h4>Productos</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detalle in Model.DetallePedidos)
+            {
+                <tr>
+                    <td>@detalle.Producto?.Nombre</td>
+                    <td>@detalle.Cantidad</td>
+                    <td>$@detalle.PrecioUnitario</td>
+                    <td>$@(detalle.Cantidad * detalle.PrecioUnitario)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
+    <a asp-action="Index">Volver a la lista</a> |
+    <a asp-controller="DetallePedido" asp-action="Create" asp-route-pedidoId="@Model?.Id">Agregar Productos</a>
 </div>

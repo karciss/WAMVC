@@ -1,45 +1,51 @@
 ﻿@model WAMVC.Models.DetallePedidoModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar";
 }
 
-<h1>Delete</h1>
+<h1>Eliminar</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Está seguro de que desea eliminar este detalle de pedido?</h3>
 <div>
-    <h4>DetallePedidoModel</h4>
+    <h4>Detalle de Pedido</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cantidad)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cantidad)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioUnitario)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrecioUnitario)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Pedido)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Pedido.Id)
+        <dd class="col-sm-10">
+            Pedido #@Html.DisplayFor(model => model.IdPedido)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Producto)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Producto.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Producto.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cantidad)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PrecioUnitario)
+        </dt>
+        <dd class="col-sm-10">
+            $@Html.DisplayFor(model => model.PrecioUnitario)
+        </dd>
+        <dt class="col-sm-2">
+            Subtotal
+        </dt>
+        <dd class="col-sm-10">
+            $@(Model.Cantidad * Model.PrecioUnitario)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
     </form>
 </div>
