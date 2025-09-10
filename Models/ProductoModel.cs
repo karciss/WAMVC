@@ -7,9 +7,11 @@ namespace WAMVC.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "El nombre es obligatorio")]
+        [StringLength(100, ErrorMessage = "El nombre no puede exceder los {1} caracteres")]
         [Display(Name = "Nombre del producto")]
         public string Nombre { get; set; }
 
+        [StringLength(500, ErrorMessage = "La descripción no puede exceder los {1} caracteres")]
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
