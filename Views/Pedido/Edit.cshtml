@@ -1,53 +1,73 @@
 ﻿@model WAMVC.Models.PedidoModel
 
 @{
-    ViewData["Title"] = "Editar";
+    ViewData["Title"] = "Editar Pedido";
 }
 
-<h1>Editar</h1>
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="form-title">
+            <i class="bi bi-cart3 me-2"></i>Editar Pedido
+        </h1>
+    </div>
+</div>
 
-<h4>Pedido</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            
-            <div class="form-group mb-3">
-                <label asp-for="IdCliente" class="control-label"></label>
-                <select asp-for="IdCliente" class="form-control" asp-items="ViewBag.IdCliente"></select>
-                <span asp-validation-for="IdCliente" class="text-danger"></span>
+<div class="form-container">
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                
+                <div class="form-group">
+                    <label asp-for="IdCliente" class="control-label"></label>
+                    <select asp-for="IdCliente" class="form-control" asp-items="ViewBag.IdCliente"></select>
+                    <span asp-validation-for="IdCliente" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="FechaPedido" class="control-label"></label>
+                    <input asp-for="FechaPedido" class="form-control" type="date" />
+                    <span asp-validation-for="FechaPedido" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Estado" class="control-label"></label>
+                    <select asp-for="Estado" class="form-control">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En proceso">En proceso</option>
+                        <option value="Completado">Completado</option>
+                        <option value="Cancelado">Cancelado</option>
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="MontoTotal" class="control-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input asp-for="MontoTotal" class="form-control" type="number" step="0.01" min="0" />
+                    </div>
+                    <span asp-validation-for="MontoTotal" class="text-danger"></span>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn-form-primary">
+                        <i class="bi bi-save"></i> Guardar
+                    </button>
+                    <a asp-action="Index" class="btn-form-secondary">
+                        <i class="bi bi-arrow-left"></i> Volver a la Lista
+                    </a>
+                </div>
+            </form>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="alert alert-info">
+                <h5 class="alert-heading"><i class="bi bi-info-circle me-2"></i>Información del Pedido</h5>
+                <p>Seleccione un cliente y complete todos los campos obligatorios. El monto total se puede editar manualmente.</p>
             </div>
-            
-            <div class="form-group mb-3">
-                <label asp-for="FechaPedido" class="control-label"></label>
-                <input asp-for="FechaPedido" class="form-control" type="date" />
-                <span asp-validation-for="FechaPedido" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group mb-3">
-                <label asp-for="Estado" class="control-label"></label>
-                <select asp-for="Estado" class="form-control">
-                    <option value="Pendiente">Pendiente</option>
-                    <option value="En proceso">En proceso</option>
-                    <option value="Completado">Completado</option>
-                    <option value="Cancelado">Cancelado</option>
-                </select>
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group mb-3">
-                <label asp-for="MontoTotal" class="control-label"></label>
-                <input asp-for="MontoTotal" class="form-control" />
-                <span asp-validation-for="MontoTotal" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 

@@ -1,45 +1,73 @@
 ﻿@model WAMVC.Models.PedidoModel
 
 @{
-    ViewData["Title"] = "Eliminar";
+    ViewData["Title"] = "Eliminar Pedido";
 }
 
-<h1>Eliminar</h1>
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="form-title">
+            <i class="bi bi-cart-x me-2"></i>Eliminar Pedido
+        </h1>
+    </div>
+</div>
 
-<h3>¿Está seguro de que desea eliminar este pedido?</h3>
-<div>
-    <h4>Pedido</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cliente)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cliente.Nombre)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaPedido)
-        </dt>
-        <dd class="col-sm-10">
-            @Model.FechaPedido.ToString("dd/MM/yyyy")
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MontoTotal)
-        </dt>
-        <dd class="col-sm-10">
-            $@Html.DisplayFor(model => model.MontoTotal)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
-    </form>
+<div class="form-container">
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="text-danger mb-4">¿Está seguro de que desea eliminar este pedido?</h4>
+            
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Cliente)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Cliente.Nombre)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FechaPedido)
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.FechaPedido.ToString("dd/MM/yyyy")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Estado)
+                </dt>
+                <dd class="col-sm-8">
+                    <span class="badge @(Model.Estado == "Completado" ? "bg-success" : 
+                           Model.Estado == "Cancelado" ? "bg-danger" : 
+                           Model.Estado == "En proceso" ? "bg-primary" : "bg-warning")">
+                        @Html.DisplayFor(model => model.Estado)
+                    </span>
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.MontoTotal)
+                </dt>
+                <dd class="col-sm-8">
+                    <strong>$@Html.DisplayFor(model => model.MontoTotal)</strong>
+                </dd>
+            </dl>
+            
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                    <a asp-action="Index" class="btn-form-secondary">
+                        <i class="bi bi-arrow-left"></i> Volver a la Lista
+                    </a>
+                </div>
+            </form>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="alert alert-warning">
+                <h5 class="alert-heading"><i class="bi bi-exclamation-triangle me-2"></i>Advertencia</h5>
+                <p>Esta acción eliminará permanentemente el pedido. Esta operación no se puede deshacer.</p>
+                <hr>
+                <p class="mb-0">Todos los detalles de productos asociados a este pedido serán eliminados también.</p>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,51 +1,78 @@
 ﻿@model WAMVC.Models.DetallePedidoModel
 
 @{
-    ViewData["Title"] = "Eliminar";
+    ViewData["Title"] = "Eliminar Item";
 }
 
-<h1>Eliminar</h1>
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="form-title">
+            <i class="bi bi-list-check-x me-2"></i>Eliminar Item
+        </h1>
+    </div>
+</div>
 
-<h3>¿Está seguro de que desea eliminar este detalle de pedido?</h3>
-<div>
-    <h4>Detalle de Pedido</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pedido)
-        </dt>
-        <dd class="col-sm-10">
-            Pedido #@Html.DisplayFor(model => model.IdPedido)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Producto)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Producto.Nombre)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cantidad)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cantidad)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioUnitario)
-        </dt>
-        <dd class="col-sm-10">
-            $@Html.DisplayFor(model => model.PrecioUnitario)
-        </dd>
-        <dt class="col-sm-2">
-            Subtotal
-        </dt>
-        <dd class="col-sm-10">
-            $@(Model.Cantidad * Model.PrecioUnitario)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
-    </form>
+<div class="form-container">
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="text-danger mb-4">¿Está seguro de que desea eliminar este item del pedido?</h4>
+            
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Pedido)
+                </dt>
+                <dd class="col-sm-8">
+                    Pedido #@Html.DisplayFor(model => model.IdPedido)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Producto)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Producto.Nombre)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Cantidad)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Cantidad)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.PrecioUnitario)
+                </dt>
+                <dd class="col-sm-8">
+                    $@Html.DisplayFor(model => model.PrecioUnitario)
+                </dd>
+                <dt class="col-sm-4">
+                    Subtotal
+                </dt>
+                <dd class="col-sm-8">
+                    <strong>$@(Model.Cantidad * Model.PrecioUnitario)</strong>
+                </dd>
+            </dl>
+            
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                    <a asp-action="Index" class="btn-form-secondary">
+                        <i class="bi bi-arrow-left"></i> Volver a la Lista
+                    </a>
+                    <a asp-controller="Pedido" asp-action="Details" asp-route-id="@Model.IdPedido" class="btn btn-accent">
+                        <i class="bi bi-receipt"></i> Ver Pedido
+                    </a>
+                </div>
+            </form>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="alert alert-warning">
+                <h5 class="alert-heading"><i class="bi bi-exclamation-triangle me-2"></i>Advertencia</h5>
+                <p>Esta acción eliminará permanentemente este item del pedido. Esta operación no se puede deshacer.</p>
+                <hr>
+                <p class="mb-0">El monto total del pedido será actualizado automáticamente tras la eliminación.</p>
+            </div>
+        </div>
+    </div>
 </div>

@@ -19,9 +19,9 @@ namespace WAMVC.Models
         [Display(Name = "Cantidad")]
         public int Cantidad { get; set; }
 
-        [Range(0.01, 99999, ErrorMessage = "El precio debe estar entre 0.01 y 99,999")]
-        [DataType(DataType.Currency)]
         [Display(Name = "Precio unitario")]
+        [DataType(DataType.Currency)]
+        [Range(0, double.MaxValue, ErrorMessage = "El precio debe ser mayor o igual a 0")]
         public decimal PrecioUnitario { get; set; }
 
         
