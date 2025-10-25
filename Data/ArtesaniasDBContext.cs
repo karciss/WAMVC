@@ -9,6 +9,7 @@ namespace WAMVC.Data
         }
         public DbSet<ProductoModel> Productos { get; set; }
         public DbSet<ClienteModel> Clientes { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<PedidoModel> Pedidos { get; set; }
         public DbSet<DetallePedidoModel> DetallePedidos { get; set; }
 
