@@ -23,6 +23,19 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 var app = builder.Build();
 
+// Seed initial data (users)
+try
+{
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    SeedData.InitializeAsync(services).GetAwaiter().GetResult();
+}
+catch (Exception ex)
+{
+    // Log or ignore in development
+    Console.WriteLine($"Seed error: {ex.Message}");
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
