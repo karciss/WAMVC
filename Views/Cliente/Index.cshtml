@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<WAMVC.Models.ClienteModel>
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 @{
     ViewData["Title"] = "Clientes";
@@ -13,9 +15,12 @@
 </div>
 
 <div class="form-buttons mb-4">
-    <a asp-action="Create" class="btn-form-primary">
-        <i class="bi bi-plus-circle"></i> Crear Nuevo
-    </a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditClientes")).Succeeded)
+    {
+        <a asp-action="Create" class="btn-form-primary">
+            <i class="bi bi-plus-circle"></i> Crear Nuevo
+        </a>
+    }
 </div>
 
 <div class="table-responsive">
@@ -47,15 +52,21 @@
                         @Html.DisplayFor(modelItem => item.Direccion)
                     </td>
                     <td class="table-actions">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-table btn-table-edit">
-                            <i class="bi bi-pencil"></i> Editar
-                        </a>
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanEditClientes")).Succeeded)
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-table btn-table-edit">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                        }
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-table btn-table-view">
                             <i class="bi bi-eye"></i> Ver
                         </a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-table btn-table-delete">
-                            <i class="bi bi-trash"></i> Eliminar
-                        </a>
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "CanDeleteClientes")).Succeeded)
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-table btn-table-delete">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        }
                     </td>
                 </tr>
             }

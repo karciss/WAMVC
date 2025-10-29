@@ -113,7 +113,7 @@ namespace WAMVC.Controllers
             {
                 Email = email,
                 NombreCompleto = nombreCompleto ?? string.Empty,
-                Rol = "Usuario",
+                // The Rol property will use the default value "Cliente" from the Usuario class
                 Activo = true
             };
 
@@ -127,7 +127,7 @@ namespace WAMVC.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, string.IsNullOrWhiteSpace(user.NombreCompleto) ? user.Email : user.NombreCompleto),
                 new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
-                new Claim(ClaimTypes.Role, user.Rol ?? "Usuario")
+                new Claim(ClaimTypes.Role, user.Rol)
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

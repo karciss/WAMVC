@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using WAMVC.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,24 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromHours(2);
         options.SlidingExpiration = true;
     });
+
+// Add Authorization Policies
+builder.Services.AddAuthorization(options =>
+{
+    // Policy for viewing clients - Only Admin and Personal can view
+    options.AddPolicy("CanViewClientes", policy =>
+        policy.RequireAssertion(context =>
+      context.User.IsInRole("Admin") || context.User.IsInRole("Personal")));
+
+    // Policy for managing clients - Only Admin can delete
+    options.AddPolicy("CanDeleteClientes", policy =>
+        policy.RequireRole("Admin"));
+
+    // Policy for editing clients - Admin and Personal can edit
+    options.AddPolicy("CanEditClientes", policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole("Admin") || context.User.IsInRole("Personal")));
+});
 
 var app = builder.Build();
 

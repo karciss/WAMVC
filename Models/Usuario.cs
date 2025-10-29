@@ -17,7 +17,7 @@ namespace WAMVC.Models
         public string NombreCompleto { get; set; } = string.Empty;
 
         [Required]
-        public string Rol { get; set; } = "Usuario"; // Usuario o Administrador
+        public string Rol { get; set; } = "Cliente"; 
 
         public bool Activo { get; set; } = true;
     }

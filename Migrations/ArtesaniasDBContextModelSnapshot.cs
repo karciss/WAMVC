@@ -47,7 +47,7 @@ namespace WAMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Clientes", (string)null);
                 });
 
             modelBuilder.Entity("WAMVC.Models.DetallePedidoModel", b =>
@@ -76,7 +76,7 @@ namespace WAMVC.Migrations
 
                     b.HasIndex("IdProducto");
 
-                    b.ToTable("DetallePedidos");
+                    b.ToTable("DetallePedidos", (string)null);
                 });
 
             modelBuilder.Entity("WAMVC.Models.PedidoModel", b =>
@@ -104,7 +104,7 @@ namespace WAMVC.Migrations
 
                     b.HasIndex("IdCliente");
 
-                    b.ToTable("Pedidos");
+                    b.ToTable("Pedidos", (string)null);
                 });
 
             modelBuilder.Entity("WAMVC.Models.ProductoModel", b =>
@@ -133,7 +133,7 @@ namespace WAMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Productos");
+                    b.ToTable("Productos", (string)null);
                 });
 
             modelBuilder.Entity("WAMVC.Models.Usuario", b =>
@@ -165,7 +165,7 @@ namespace WAMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("WAMVC.Models.DetallePedidoModel", b =>
