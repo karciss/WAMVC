@@ -22,19 +22,16 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = true;
     });
 
-// Add Authorization Policies
+// Politicas
 builder.Services.AddAuthorization(options =>
 {
-    // Policy for viewing clients - Only Admin and Personal can view
     options.AddPolicy("CanViewClientes", policy =>
         policy.RequireAssertion(context =>
       context.User.IsInRole("Admin") || context.User.IsInRole("Personal")));
 
-    // Policy for managing clients - Only Admin can delete
     options.AddPolicy("CanDeleteClientes", policy =>
         policy.RequireRole("Admin"));
 
-    // Policy for editing clients - Admin and Personal can edit
     options.AddPolicy("CanEditClientes", policy =>
         policy.RequireAssertion(context =>
             context.User.IsInRole("Admin") || context.User.IsInRole("Personal")));
